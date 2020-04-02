@@ -1,0 +1,67 @@
+$primaryBgColor: #01abfb;
+$primaryBorderColor: #01abfb;
+$primaryColor: #ffffff;
+
+$primaryHoverBgColor: #009de6;
+$primaryHoverBorderColor: #009de6;
+$primaryHoverColor: #ffffff;
+
+$secondaryBgColor: transparent;
+$secondaryBorderColor: #01abfb;
+$secondaryColor: #01abfb;
+
+$secondaryHoverBgColor: rgba(1, 171, 251, 0.1);
+$secondaryHoverBorderColor: #01abfb;
+$secondaryHoverColor: #01abfb;
+
+$disabledBgColor: #e8e8e8;
+$disabledBorderColor: #e8e8e8;
+$disabledColor: #cccccc;
+
+.tabs {
+  display: flex;
+}
+
+.button {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+  text-decoration: none;
+  font-weight: normal;
+  white-space: nowrap;
+  min-width: 94px;
+  border: none;
+  border-left: 1px solid #fff;
+
+  cursor: pointer;
+  transition: background-color 0.2s;
+  border-width: 1px;
+  overflow: hidden;
+
+  &:before {
+    content: '';
+    display: inline-block;
+    min-height: inherit;
+    height: 100%;
+    vertical-align: middle;
+  }
+  &:focus {
+    outline: none;
+  }
+  &--hasNoBorderRadius {
+    border-radius: 0;
+  }
+  // Цвета
+  background-color: $primaryBgColor;
+  color: $primaryColor;
+
+  &:hover {
+    background-color: $primaryHoverBgColor;
+    color: $primaryHoverColor;
+  }
+
+  // Размеры
+  height: 40px;
+  font-size: 16px;
+}

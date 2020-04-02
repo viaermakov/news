@@ -1,0 +1,23 @@
+.layout {
+  margin: 2rem 10%;
+
+  @media screen and (max-width: 900px) {
+    margin: 2rem 4%;
+  }
+}
+
+.viewTabs {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  svg {
+    margin: 0 0.5rem;
+    cursor: pointer;
+  }
+}
+
+.lang {
+  display: flex;
+  justify-content: flex-end;
+}

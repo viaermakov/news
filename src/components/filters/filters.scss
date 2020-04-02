@@ -1,0 +1,48 @@
+.filters {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 3rem 0;
+}
+
+.tabs {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  @media screen and (max-width: 400px) {
+    flex-wrap: wrap;
+  }
+}
+
+.arrows {
+  margin: 0.5rem 0;
+
+  button {
+    border: none;
+    min-width: 42px;
+  }
+}
+
+.button {
+  margin: 0 1rem;
+}
+
+.sorting {
+  margin: 0.5rem 0;
+
+  display: flex;
+  align-items: center;
+
+  @media screen and (max-width: 400px) {
+    flex-wrap: wrap;
+  }
+}
+
+.title {
+  margin-right: 0.5rem;
+}
+
+.sortButtons {
+  margin: 0.5rem 0;
+}

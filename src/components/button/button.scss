@@ -1,0 +1,51 @@
+$primaryBgColor: #fff;
+$primaryBorderColor: #000;
+$primaryColor: #000;
+
+$primaryHoverBgColor: #eee;
+$primaryHoverBorderColor: #000;
+$primaryHoverColor: #000;
+
+$disabledBgColor: #e8e8e8;
+$disabledBorderColor: #e8e8e8;
+$disabledColor: #cccccc;
+
+.tabs {
+  display: flex;
+}
+
+.button {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+  text-decoration: none;
+  font-weight: normal;
+  white-space: nowrap;
+  min-width: 94px;
+  border: 1px solid $primaryBorderColor;
+  margin-top: -1px;
+  margin-left: -1px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  border-width: 1px;
+  overflow: hidden;
+
+  &:focus {
+    outline: none;
+  }
+
+  // Цвета
+  background-color: $primaryBgColor;
+  color: $primaryColor;
+
+  &.active,
+  &:hover {
+    background-color: $primaryHoverBgColor;
+    color: $primaryHoverColor;
+  }
+
+  // Размеры
+  height: 40px;
+  font-size: 16px;
+}
