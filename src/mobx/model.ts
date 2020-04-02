@@ -76,7 +76,6 @@ export const ArticlesStore = types
           case "name": {
             const sortedArticles = filteredArticles.sort(sortByName);
             return isReverse ? sortedArticles.reverse() : sortedArticles;
-            break;
           }
           default:
             return isReverse ? filteredArticles.reverse() : filteredArticles;
