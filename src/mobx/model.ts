@@ -1,11 +1,15 @@
+import { ICategory } from "./../types/index";
 import { createTransformer } from "mobx-utils";
 import { types, flow, cast } from "mobx-state-tree";
 
 import { IArticle } from "src/types";
-import { IResponse, getApi } from "src/services/api";
+import { IResponse, getApi, IParams } from "src/services/api";
 
 interface IQuery {
-  [x: string]: string;
+  search: string;
+  category: ICategory;
+  order: string;
+  sorting: string;
 }
 
 interface IData {
@@ -24,33 +28,46 @@ function sortByName(a: IArticle, b: IArticle) {
   return 0;
 }
 
-export const Source = types.model({
+export const SourceType = types.model({
   id: types.maybeNull(types.string),
   name: types.maybeNull(types.string)
 });
 
-export const Article = types.model({
+export const ArticleModel = types.model({
   author: types.maybeNull(types.string),
   title: types.string,
-  description: types.string,
+  description: types.maybeNull(types.string),
   url: types.string,
-  urlToImage: types.string,
+  urlToImage: types.maybeNull(types.string),
   publishedAt: types.string,
   content: types.maybeNull(types.string),
-  source: Source
+  source: SourceType
 });
+
+export const CategoryType = types.maybe(
+  types.union(
+    types.literal("business"),
+    types.literal("sports"),
+    types.literal("entertainment"),
+    types.literal("general"),
+    types.literal("health"),
+    types.literal("science"),
+    types.literal("technology")
+  )
+);
 
 export const ArticlesStore = types
   .model({
-    articles: types.optional(types.array(Article), []),
+    articles: types.optional(types.array(ArticleModel), []),
     favouriteIds: types.array(types.number),
-    isLoading: types.boolean
+    isLoading: types.boolean,
+    error: types.string
   })
   .views(self => ({
     get getSortedArticles() {
       return createTransformer((query: IQuery) => {
-        const filteredArticles = self.articles.filter(articles =>
-          articles.title.toLowerCase().includes(query.search || "")
+        const filteredArticles = self.articles.filter((article: IArticle) =>
+          article.title.toLowerCase().includes(query.search || "")
         );
         const isReverse = query.order === "desc";
 
@@ -62,7 +79,6 @@ export const ArticlesStore = types
                 new Date(a.publishedAt).valueOf()
             );
             return isReverse ? sortedArticles.reverse() : sortedArticles;
-            break;
           }
           case "age": {
             const sortedArticles = filteredArticles.sort(
@@ -71,7 +87,6 @@ export const ArticlesStore = types
                 new Date(b.publishedAt).valueOf()
             );
             return isReverse ? sortedArticles.reverse() : sortedArticles;
-            break;
           }
           case "name": {
             const sortedArticles = filteredArticles.sort(sortByName);
@@ -84,21 +99,45 @@ export const ArticlesStore = types
     }
   }))
   .actions(self => {
-    const getArticles = flow(function*() {
+    const setCategory = (query: IQuery) => {
+      const params: IParams = {
+        q: query.search,
+        category: query.category
+      };
+      getArticles(params);
+    };
+
+    const searchArticles = (query: IQuery) => {
+      const params: IParams = {
+        q: query.search,
+        category: query.category
+      };
+      getArticles(params);
+    };
+
+    const getArticles = flow(function*(params?: IParams) {
       self.isLoading = true;
 
-      const { body }: IResponse<IData> = yield getApi({
-        url: "https://newsapi.org/v2/top-headlines",
-        params: {
-          country: "ru"
-        }
-      });
-
+      try {
+        const { body }: IResponse<IData> = yield getApi({
+          url: "https://newsapi.org/v2/top-headlines",
+          params: {
+            category: params?.category,
+            q: params?.q,
+            country: "ru",
+            ...params
+          }
+        });
+        self.articles = cast(body.articles);
+      } catch (e) {
+        self.error = e.message;
+      }
       self.isLoading = false;
-      self.articles = cast(body.articles);
     });
 
     return {
-      getArticles
+      setCategory,
+      getArticles,
+      searchArticles
     };
   });

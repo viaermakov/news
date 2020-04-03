@@ -10,7 +10,8 @@ export const rootStore = RootModel.create({
   articles: {
     articles: [],
     isLoading: false,
-    favouriteIds: []
+    favouriteIds: [],
+    error: ""
   }
 });
 

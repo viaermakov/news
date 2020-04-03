@@ -1,16 +1,16 @@
 import * as React from "react";
 import { useLocation } from "react-router-dom";
-import { observer, useLocalStore } from "mobx-react";
+import { observer, useLocalStore } from "mobx-react-lite";
 
 import { getQuery } from "src/getQuery";
 import { Filters } from "components/filters";
 
 import styles from "./main.scss";
 
-import { useStore } from 'src/mobx';
+import { useStore } from "src/mobx";
 
 import { Articles } from "src/components/articles";
-
+import { ErrorWrapper } from "src/components/error";
 
 interface IMainContainerProps {}
 
@@ -26,7 +26,7 @@ const Main: React.FC<IMainContainerProps> = observer(({}) => {
   }));
 
   React.useEffect(() => {
-    articlesStore.getArticles();
+    articlesStore.getArticles(query.category);
   }, []);
 
   const handleClick = () => {
@@ -34,9 +34,10 @@ const Main: React.FC<IMainContainerProps> = observer(({}) => {
   };
   return (
     <div className={styles.layout} onClick={handleClick}>
-      {store.title}
       <Filters />
-      <Articles articles={articles} isLoading={articlesStore.isLoading} />
+      <ErrorWrapper error={articlesStore.error}>
+        <Articles articles={articles} isLoading={articlesStore.isLoading} />
+      </ErrorWrapper>
     </div>
   );
 });

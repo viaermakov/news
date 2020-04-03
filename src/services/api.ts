@@ -1,12 +1,18 @@
+import { ICategory } from "src/types";
 import * as superagent from "superagent";
 
 export interface IResponse<T> {
   body: T;
-  error: string
+  error: string;
 }
 
-interface IParams {
-  [k: string]: string;
+type countryParamType = "ru" | "en";
+
+export interface IParams {
+  category?: ICategory;
+  country?: countryParamType;
+  q?: string;
+  pageSize?: number;
 }
 
 type IMethod = "get" | "post" | "put";
