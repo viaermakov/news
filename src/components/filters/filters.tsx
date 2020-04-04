@@ -7,7 +7,7 @@ import { Tabs } from "components/tabs";
 
 import { getQuery } from "src/getQuery";
 import Categories from "./blocks/categories/categories";
-import { useStore } from "src/mobx";
+import { useStore } from "src/store";
 import { ICategory } from "src/types";
 
 interface Props {}
@@ -19,7 +19,7 @@ interface IOption {
 
 const orderOptions: IOption[] = [
   { id: 0, label: "↑", value: "asc" },
-  { id: 1, label: "↓", value: "desc" }
+  { id: 1, label: "↓", value: "desc" },
 ];
 
 const Filters: React.FC<Props> = () => {
@@ -38,18 +38,20 @@ const Filters: React.FC<Props> = () => {
 
   const handleChange = React.useCallback(
     (value: string) => {
-      const queryString = qs.stringify({ ...query, search: value });
+      const newQuery = { ...query, category: value };
+      const queryString = qs.stringify(newQuery);
       history.push({ search: decodeURIComponent(queryString) });
-      articlesStore.searchArticles(query);
+      articlesStore.searchArticles(newQuery);
     },
     [query]
   );
 
   const handleSetCategory = React.useCallback(
     (value: ICategory) => {
-      const queryString = qs.stringify({ ...query, category: value });
+      const newQuery = { ...query, category: value };
+      const queryString = qs.stringify(newQuery);
       history.push({ search: decodeURIComponent(queryString) });
-      articlesStore.setCategory(query);
+      articlesStore.setCategory(newQuery);
     },
     [query]
   );

@@ -1,4 +1,4 @@
-import { ICategory } from "./../types/index";
+import { ICategory } from "../types/index";
 import { createTransformer } from "mobx-utils";
 import { types, flow, cast } from "mobx-state-tree";
 
@@ -30,7 +30,7 @@ function sortByName(a: IArticle, b: IArticle) {
 
 export const SourceType = types.model({
   id: types.maybeNull(types.string),
-  name: types.maybeNull(types.string)
+  name: types.maybeNull(types.string),
 });
 
 export const ArticleModel = types.model({
@@ -41,7 +41,7 @@ export const ArticleModel = types.model({
   urlToImage: types.maybeNull(types.string),
   publishedAt: types.string,
   content: types.maybeNull(types.string),
-  source: SourceType
+  source: SourceType,
 });
 
 export const CategoryType = types.maybe(
@@ -61,19 +61,17 @@ export const ArticlesStore = types
     articles: types.optional(types.array(ArticleModel), []),
     favouriteIds: types.array(types.number),
     isLoading: types.boolean,
-    error: types.string
+    error: types.string,
+    page: types.number,
   })
-  .views(self => ({
+  .views((self) => ({
     get getSortedArticles() {
       return createTransformer((query: IQuery) => {
-        const filteredArticles = self.articles.filter((article: IArticle) =>
-          article.title.toLowerCase().includes(query.search || "")
-        );
         const isReverse = query.order === "desc";
 
         switch (query.sorting) {
           case "id": {
-            const sortedArticles = filteredArticles.sort(
+            const sortedArticles = self.articles.sort(
               (a: IArticle, b: IArticle) =>
                 new Date(a.publishedAt).valueOf() -
                 new Date(a.publishedAt).valueOf()
@@ -81,7 +79,7 @@ export const ArticlesStore = types
             return isReverse ? sortedArticles.reverse() : sortedArticles;
           }
           case "age": {
-            const sortedArticles = filteredArticles.sort(
+            const sortedArticles = self.articles.sort(
               (a: IArticle, b: IArticle) =>
                 new Date(a.publishedAt).valueOf() -
                 new Date(b.publishedAt).valueOf()
@@ -89,20 +87,20 @@ export const ArticlesStore = types
             return isReverse ? sortedArticles.reverse() : sortedArticles;
           }
           case "name": {
-            const sortedArticles = filteredArticles.sort(sortByName);
+            const sortedArticles = self.articles.sort(sortByName);
             return isReverse ? sortedArticles.reverse() : sortedArticles;
           }
           default:
-            return isReverse ? filteredArticles.reverse() : filteredArticles;
+            return isReverse ? self.articles.reverse() : self.articles;
         }
       });
-    }
+    },
   }))
-  .actions(self => {
+  .actions((self) => {
     const setCategory = (query: IQuery) => {
       const params: IParams = {
         q: query.search,
-        category: query.category
+        category: query.category,
       };
       getArticles(params);
     };
@@ -110,25 +108,32 @@ export const ArticlesStore = types
     const searchArticles = (query: IQuery) => {
       const params: IParams = {
         q: query.search,
-        category: query.category
+        category: query.category,
       };
       getArticles(params);
     };
 
-    const getArticles = flow(function*(params?: IParams) {
-      self.isLoading = true;
+    const getArticles = flow(function*(params?: IParams, more?: boolean) {
+      let articles = self.articles;
+
+      if (more) {
+        self.page = self.page + 1;
+      } else {
+        self.isLoading = true;
+        self.page = 1;
+        articles = cast([]);
+      }
 
       try {
         const { body }: IResponse<IData> = yield getApi({
           url: "https://newsapi.org/v2/top-headlines",
           params: {
-            category: params?.category,
-            q: params?.q,
             country: "ru",
-            ...params
-          }
+            page: self.page,
+            ...params,
+          },
         });
-        self.articles = cast(body.articles);
+        self.articles = cast([...articles, ...body.articles]);
       } catch (e) {
         self.error = e.message;
       }
@@ -138,6 +143,6 @@ export const ArticlesStore = types
     return {
       setCategory,
       getArticles,
-      searchArticles
+      searchArticles,
     };
   });

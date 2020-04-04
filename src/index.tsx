@@ -4,7 +4,7 @@ import * as ReactDOM from "react-dom";
 // import { ChartPage } from './containers/ChartPage';
 import Routes from "./routes/root";
 import "./index.scss";
-import { rootStore, Provider } from "./mobx";
+import { rootStore, Provider } from "./store";
 
 const App = () => <Provider value={rootStore}><Routes /></Provider>;
 

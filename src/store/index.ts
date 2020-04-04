@@ -1,9 +1,9 @@
-import { ArticlesStore } from "src/mobx/model";
+import { ArticlesStore } from "src/store/main";
 import { types, Instance, onSnapshot } from "mobx-state-tree";
 import { createContext, useContext } from "react";
 
 const RootModel = types.model({
-  articles: ArticlesStore
+  articles: ArticlesStore,
 });
 
 export const rootStore = RootModel.create({
@@ -11,11 +11,12 @@ export const rootStore = RootModel.create({
     articles: [],
     isLoading: false,
     favouriteIds: [],
-    error: ""
-  }
+    error: "",
+    page: 0,
+  },
 });
 
-onSnapshot(rootStore, snapshot => console.log("Snapshot: ", snapshot));
+onSnapshot(rootStore, (snapshot) => console.log("Snapshot: ", snapshot));
 
 export type RootInstance = Instance<typeof RootModel>;
 const RootStoreContext = createContext<null | RootInstance>(null);

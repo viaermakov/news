@@ -1,4 +1,4 @@
-import { ArticleModel } from "src/mobx/model";
+import { ArticleModel } from "src/store/main";
 import { Instance } from "mobx-state-tree";
 
 export interface IArticle extends Instance<typeof ArticleModel> {}

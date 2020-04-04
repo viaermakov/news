@@ -27,7 +27,7 @@ const Categories: React.FC<Props> = ({ onClick }) => {
     <div className={styles.filters}>
       <div className={styles.tabs}>
         {CATEGORIES.map(category => {
-          return <Category category={category} onClick={handleClick} />;
+          return <Category key={category.id} category={category} onClick={handleClick} />;
         })}
       </div>
     </div>

@@ -1,3 +1,4 @@
+import { API_KEY } from "src/constants";
 import { ICategory } from "src/types";
 import * as superagent from "superagent";
 
@@ -13,13 +14,14 @@ export interface IParams {
   country?: countryParamType;
   q?: string;
   pageSize?: number;
+  page?: number;
 }
 
 type IMethod = "get" | "post" | "put";
 
 const superagentWithHeader = (method: IMethod, url: string) => {
   return superagent[method](url).set({
-    "X-Api-Key": "4c0896c9234349aaa60d0a7ffba027c5"
+    "X-Api-Key": API_KEY,
   });
 };
 
