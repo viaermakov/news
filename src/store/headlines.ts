@@ -18,6 +18,8 @@ interface IData {
   articles: IArticle[];
 }
 
+const MAX_PAGE = 5;
+
 function sortByName(a: IArticle, b: IArticle) {
   if (a.title < b.title) {
     return -1;
@@ -74,14 +76,6 @@ export const ArticlesStore = types
             const sortedArticles = self.articles.sort(
               (a: IArticle, b: IArticle) =>
                 new Date(a.publishedAt).valueOf() -
-                new Date(a.publishedAt).valueOf()
-            );
-            return isReverse ? sortedArticles.reverse() : sortedArticles;
-          }
-          case "age": {
-            const sortedArticles = self.articles.sort(
-              (a: IArticle, b: IArticle) =>
-                new Date(a.publishedAt).valueOf() -
                 new Date(b.publishedAt).valueOf()
             );
             return isReverse ? sortedArticles.reverse() : sortedArticles;
@@ -116,6 +110,10 @@ export const ArticlesStore = types
     const getArticles = flow(function*(params?: IParams, more?: boolean) {
       let articles = self.articles;
 
+      if (self.page + 1 > MAX_PAGE) {
+        return;
+      }
+
       if (more) {
         self.page = self.page + 1;
       } else {
@@ -133,7 +131,8 @@ export const ArticlesStore = types
             ...params,
           },
         });
-        self.articles = cast([...articles, ...body.articles]);
+
+        self.articles.replace([...articles, ...body.articles]);
       } catch (e) {
         self.error = e.message;
       }

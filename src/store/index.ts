@@ -1,4 +1,4 @@
-import { ArticlesStore } from "src/store/main";
+import { ArticlesStore } from "src/store/headlines";
 import { types, Instance, onSnapshot } from "mobx-state-tree";
 import { createContext, useContext } from "react";
 

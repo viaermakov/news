@@ -38,7 +38,7 @@ const Filters: React.FC<Props> = () => {
 
   const handleChange = React.useCallback(
     (value: string) => {
-      const newQuery = { ...query, category: value };
+      const newQuery = { ...query, search: value };
       const queryString = qs.stringify(newQuery);
       history.push({ search: decodeURIComponent(queryString) });
       articlesStore.searchArticles(newQuery);

@@ -21,20 +21,15 @@ const Articles: React.FC<IArticlesComponentProps> = ({
   isLoading,
 }) => {
   const wrapperRef = React.useRef<HTMLDivElement>(null);
-  const isMounted = React.useRef(false);
 
-  const [isVisible] = useIntersectionObserver(wrapperRef, {
-    rootMargin: '200px',
-    //threshold: 1.0,
-  });
-
-  React.useEffect(() => {
-    if (!isMounted.current) {
-      isMounted.current = true;
-      return;
-    }
+  const handleIntersect = () => {
     onEndedList(true);
-  }, [isVisible]);
+  }
+  
+  useIntersectionObserver(wrapperRef, {
+    rootMargin: '30%',
+    onIntersect: handleIntersect
+  });
 
   if (isLoading) {
     return <div>Loading...</div>;
