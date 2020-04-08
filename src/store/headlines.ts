@@ -1,9 +1,9 @@
-import { ICategory } from "../types/index";
-import { createTransformer } from "mobx-utils";
-import { types, flow, cast } from "mobx-state-tree";
+import { ICategory } from '../types/index';
+import { createTransformer } from 'mobx-utils';
+import { types, flow, cast } from 'mobx-state-tree';
 
-import { IArticle } from "src/types";
-import { IResponse, getApi, IParams } from "src/services/api";
+import { IArticle } from 'src/types';
+import { IResponse, getApi, IParams } from 'src/services/api';
 
 interface IQuery {
   search: string;
@@ -48,14 +48,14 @@ export const ArticleModel = types.model({
 
 export const CategoryType = types.maybe(
   types.union(
-    types.literal("business"),
-    types.literal("sports"),
-    types.literal("entertainment"),
-    types.literal("general"),
-    types.literal("health"),
-    types.literal("science"),
-    types.literal("technology")
-  )
+    types.literal('business'),
+    types.literal('sports'),
+    types.literal('entertainment'),
+    types.literal('general'),
+    types.literal('health'),
+    types.literal('science'),
+    types.literal('technology'),
+  ),
 );
 
 export const ArticlesStore = types
@@ -66,21 +66,20 @@ export const ArticlesStore = types
     error: types.string,
     page: types.number,
   })
-  .views((self) => ({
+  .views(self => ({
     get getSortedArticles() {
       return createTransformer((query: IQuery) => {
-        const isReverse = query.order === "desc";
+        const isReverse = query.order === 'desc';
 
         switch (query.sorting) {
-          case "id": {
+          case 'id': {
             const sortedArticles = self.articles.sort(
               (a: IArticle, b: IArticle) =>
-                new Date(a.publishedAt).valueOf() -
-                new Date(b.publishedAt).valueOf()
+                new Date(a.publishedAt).valueOf() - new Date(b.publishedAt).valueOf(),
             );
             return isReverse ? sortedArticles.reverse() : sortedArticles;
           }
-          case "name": {
+          case 'name': {
             const sortedArticles = self.articles.sort(sortByName);
             return isReverse ? sortedArticles.reverse() : sortedArticles;
           }
@@ -90,7 +89,7 @@ export const ArticlesStore = types
       });
     },
   }))
-  .actions((self) => {
+  .actions(self => {
     const setCategory = (query: IQuery) => {
       const params: IParams = {
         q: query.search,
@@ -124,9 +123,9 @@ export const ArticlesStore = types
 
       try {
         const { body }: IResponse<IData> = yield getApi({
-          url: "https://newsapi.org/v2/top-headlines",
+          url: 'https://newsapi.org/v2/top-headlines',
           params: {
-            country: "ru",
+            country: 'ru',
             page: self.page,
             ...params,
           },

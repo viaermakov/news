@@ -1,9 +1,9 @@
-import { DependencyList, useCallback, useEffect, useRef } from "react";
+import { DependencyList, useCallback, useEffect, useRef } from 'react';
 
 export type UseDebounceReturn = [() => boolean | null, () => void];
 export type UseTimeoutFnReturn = [() => boolean | null, () => void, () => void];
 
-function useTimeoutFn(fn: Function, ms: number = 0): UseTimeoutFnReturn {
+function useTimeoutFn(fn: Function, ms = 0): UseTimeoutFnReturn {
   const ready = useRef<boolean | null>(false);
   const timeout = useRef<ReturnType<typeof setTimeout>>();
   const callback = useRef(fn);
@@ -40,8 +40,8 @@ function useTimeoutFn(fn: Function, ms: number = 0): UseTimeoutFnReturn {
 
 export default function useDebounce(
   fn: Function,
-  ms: number = 0,
-  deps: DependencyList = []
+  ms = 0,
+  deps: DependencyList = [],
 ): UseDebounceReturn {
   const [isReady, cancel, reset] = useTimeoutFn(fn, ms);
   useEffect(reset, deps);

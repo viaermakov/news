@@ -1,0 +1,166 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "tsconfig.json",
+    "tsconfigRootDir": "."
+  },
+  "plugins": ["react", "react-hooks", "@typescript-eslint", "prettier"],
+  "rules": {
+    "prettier/prettier": 2,
+    "no-duplicate-imports": [
+      2,
+      {
+        "includeExports": true
+      }
+    ],
+    "no-template-curly-in-string": 2,
+    "block-scoped-var": 2,
+    "curly": [2, "all"],
+    "eqeqeq": 2,
+    "max-classes-per-file": [2, 1],
+    "no-alert": 1,
+    "no-console": 1,
+    "no-else-return": [
+      2,
+      {
+        "allowElseIf": false
+      }
+    ],
+    "no-implicit-coercion": 2,
+    "no-labels": 2,
+    "no-lone-blocks": 2,
+    "no-multi-spaces": 2,
+    "no-new": 2,
+    "no-new-func": 2,
+    "no-new-wrappers": 2,
+    "no-return-await": 2,
+    "no-self-compare": 2,
+    "no-sequences": 2,
+    "no-throw-literal": 2,
+    "no-useless-call": 2,
+    "no-useless-concat": 2,
+    "no-useless-return": 2,
+    "prefer-promise-reject-errors": 2,
+    "radix": 2,
+    "no-undefined": 2,
+    "array-bracket-newline": [
+      2,
+      {
+        "multiline": true
+      }
+    ],
+    "comma-dangle": [2, "always-multiline"],
+    "comma-style": 2,
+    "eol-last": 2,
+    "key-spacing": 2,
+    "keyword-spacing": 2,
+    "new-parens": 2,
+    "no-bitwise": 1,
+    "no-lonely-if": 1,
+    "no-multiple-empty-lines": 2,
+    "no-nested-ternary": 2,
+    "no-new-object": 2,
+    "no-tabs": [
+      2,
+      {
+        "allowIndentationTabs": true
+      }
+    ],
+    "no-trailing-spaces": 2,
+    "no-unneeded-ternary": 2,
+    "no-whitespace-before-property": 2,
+    "object-curly-newline": 2,
+    "object-curly-spacing": [2, "always"],
+    "semi-spacing": 2,
+    "space-before-blocks": 2,
+    "space-before-function-paren": [
+      2,
+      {
+        "anonymous": "always",
+        "named": "never",
+        "asyncArrow": "always"
+      }
+    ],
+    "space-in-parens": 2,
+    "space-infix-ops": 2,
+    "space-unary-ops": 2,
+    "spaced-comment": [2, "always"],
+    "switch-colon-spacing": 2,
+    "arrow-body-style": [2, "as-needed"],
+    "arrow-parens": [2, "as-needed"],
+    "arrow-spacing": 2,
+    "no-confusing-arrow": 2,
+    "no-useless-computed-key": 2,
+    "no-useless-rename": 2,
+    "object-shorthand": [2, "always"],
+    "prefer-arrow-callback": 1,
+    "prefer-destructuring": 0,
+    "rest-spread-spacing": [2, "never"],
+    "template-curly-spacing": 2,
+    "@typescript-eslint/no-use-before-define": 0,
+    "@typescript-eslint/member-ordering": 1,
+    "@typescript-eslint/explicit-function-return-type": 0,
+    "@typescript-eslint/no-magic-numbers": [
+      2,
+      {
+        "ignoreNumericLiteralTypes": true,
+        "ignoreEnums": true,
+        "enforceConst": true,
+        "ignoreReadonlyClassProperties": true,
+        "ignore": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 24, 60, 1000]
+      }
+    ],
+    "@typescript-eslint/brace-style": [2, "1tbs"],
+    "@typescript-eslint/quotes": [
+      2,
+      "single",
+      {
+        "avoidEscape": true
+      }
+    ],
+    "@typescript-eslint/no-non-null-assertion": 0,
+    "@typescript-eslint/func-call-spacing": [2, "never"],
+    "@typescript-eslint/no-useless-constructor": 2,
+    "@typescript-eslint/prefer-for-of": 1,
+    "@typescript-eslint/no-parameter-properties": 2,
+    "@typescript-eslint/no-unnecessary-type-arguments": 1,
+    "@typescript-eslint/prefer-function-type": 1,
+    "@typescript-eslint/prefer-readonly": 1,
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/camelcase": [
+      2,
+      {
+        "properties": "never"
+      }
+    ],
+    "@typescript-eslint/interface-name-prefix": "off",
+    "@typescript-eslint/no-unused-vars": "off",
+
+    "react/no-access-state-in-setstate": 2,
+    "react/no-danger": 2,
+    "react/no-this-in-sfc": 2,
+    "react/prefer-stateless-function": 2,
+    "react/jsx-filename-extension": [
+      2,
+      {
+        "extensions": [".tsx"]
+      }
+    ],
+    "react/jsx-no-bind": 2,
+    "react/jsx-no-useless-fragment": 2,
+    "react/jsx-pascal-case": 2,
+
+    "react-hooks/rules-of-hooks": 2,
+    "react-hooks/exhaustive-deps": 1
+  }
+}

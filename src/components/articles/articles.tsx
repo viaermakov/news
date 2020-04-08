@@ -1,11 +1,11 @@
-import * as React from "react";
-import cls from "classnames";
+import * as React from 'react';
+import cls from 'classnames';
 
-import { IArticle } from "src/types";
-import Row from "./article";
+import { IArticle } from 'src/types';
+import Row from './article';
 
-import styles from "./articles.scss";
-import { useIntersectionObserver } from "src/components/io/io";
+import styles from './articles.scss';
+import { useIntersectionObserver } from 'src/components/io/io';
 
 interface IArticlesComponentProps {
   articles: IArticle[];
@@ -15,20 +15,16 @@ interface IArticlesComponentProps {
   onEndedList: (v: boolean) => void;
 }
 
-const Articles: React.FC<IArticlesComponentProps> = ({
-  articles,
-  onEndedList,
-  isLoading,
-}) => {
+const Articles: React.FC<IArticlesComponentProps> = ({ articles, onEndedList, isLoading }) => {
   const wrapperRef = React.useRef<HTMLDivElement>(null);
 
   const handleIntersect = () => {
     onEndedList(true);
-  }
-  
+  };
+
   useIntersectionObserver(wrapperRef, {
     rootMargin: '30%',
-    onIntersect: handleIntersect
+    onIntersect: handleIntersect,
   });
 
   if (isLoading) {
@@ -39,16 +35,14 @@ const Articles: React.FC<IArticlesComponentProps> = ({
     return <div>No results. Try to use other filters...</div>;
   }
 
-  const renderView = (article: IArticle): React.ReactElement | null => {
-    return (
-      <Row key={article.publishedAt} article={article} isFavourite={false} />
-    );
-  };
+  const renderView = (article: IArticle): React.ReactElement | null => (
+    <Row key={article.publishedAt} article={article} isFavourite={false} />
+  );
 
   return (
     <>
       <div className={cls(styles.standartArticles)} ref={wrapperRef}>
-        {articles.map((article) => renderView(article))}
+        {articles.map(article => renderView(article))}
       </div>
       <div ref={wrapperRef}></div>
     </>

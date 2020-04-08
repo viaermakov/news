@@ -1,16 +1,15 @@
-import * as React from "react";
-import qs from "qs";
-import styles from "./filters.scss";
-import { useHistory, useLocation } from "react-router-dom";
-import { Input } from "components/input";
-import { Tabs } from "components/tabs";
+import * as React from 'react';
+import qs from 'qs';
+import styles from './filters.scss';
+import { useHistory, useLocation } from 'react-router-dom';
+import { Input } from 'components/input';
+import { Tabs } from 'components/tabs';
 
-import { getQuery } from "src/getQuery";
-import Categories from "./blocks/categories/categories";
-import { useStore } from "src/store";
-import { ICategory } from "src/types";
+import { getQuery } from 'src/getQuery';
+import Categories from './blocks/categories/categories';
+import { useStore } from 'src/store';
+import { ICategory } from 'src/types';
 
-interface Props {}
 interface IOption {
   id: number;
   label: string;
@@ -18,11 +17,11 @@ interface IOption {
 }
 
 const orderOptions: IOption[] = [
-  { id: 0, label: "↑", value: "asc" },
-  { id: 1, label: "↓", value: "desc" },
+  { id: 0, label: '↑', value: 'asc' },
+  { id: 1, label: '↓', value: 'desc' },
 ];
 
-const Filters: React.FC<Props> = () => {
+const Filters: React.FC = () => {
   const history = useHistory();
   const location = useLocation();
   const query = getQuery(location);
@@ -33,7 +32,7 @@ const Filters: React.FC<Props> = () => {
       const queryString = qs.stringify({ ...query, order: option.value });
       history.push({ search: decodeURIComponent(queryString) });
     },
-    [query]
+    [query, history],
   );
 
   const handleChange = React.useCallback(
@@ -43,7 +42,7 @@ const Filters: React.FC<Props> = () => {
       history.push({ search: decodeURIComponent(queryString) });
       articlesStore.searchArticles(newQuery);
     },
-    [query]
+    [articlesStore, query, history],
   );
 
   const handleSetCategory = React.useCallback(
@@ -53,16 +52,12 @@ const Filters: React.FC<Props> = () => {
       history.push({ search: decodeURIComponent(queryString) });
       articlesStore.setCategory(newQuery);
     },
-    [query]
+    [articlesStore, query, history],
   );
 
   return (
     <div className={styles.filters}>
-      <Input
-        className={styles.input}
-        onChange={handleChange}
-        value={query.search}
-      />
+      <Input className={styles.input} onChange={handleChange} value={query.search} />
       <div className={styles.tabs}>
         <Tabs<IOption>
           value={query.order}

@@ -1,22 +1,26 @@
 {
   "compilerOptions": {
     "sourceMap": true,
-    "target": "esnext",
-    "module": "esnext",
+    "target": "ES2015",
+    "module": "CommonJS",
     "jsx": "react",
     "moduleResolution": "node",
     "experimentalDecorators": true,
     "declaration": false,
     "removeComments": true,
+    "resolveJsonModule": true,
     "noImplicitReturns": true,
-    "allowSyntheticDefaultImports": true,
     "noUnusedLocals": true,
     "strict": true,
     "outDir": "build",
-    "baseUrl": "src",
+    "esModuleInterop": true,
+    "baseUrl": ".",
     "paths": {
-      "src/*": ["./*"],
-      
+      "src/*": ["src/*"],
+      "components/*": ["src/components/*"],
+      "model/*": ["src/model/*"],
+      "models/*": ["src/types/*"],
+      "translates/*": ["src/translates/*"]
     }
   },
   "exclude": ["build", "node_modules"]
