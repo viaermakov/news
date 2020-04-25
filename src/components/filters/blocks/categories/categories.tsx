@@ -1,37 +1,36 @@
-import * as React from "react";
-import styles from "./categories.scss";
+import * as React from 'react';
 
-import Category, { ICategoryItem } from "./category";
-import { ICategory } from "src/types";
+import Category from './category/category';
+import { ICategoryItem } from './types';
+
+import styles from './categories.scss';
+import cls from 'classnames';
 
 interface Props {
-  onClick: (v: ICategory) => void;
+  onClick: (v: string) => void;
+  categories: ICategoryItem[];
+  className?: string;
 }
 
-const CATEGORIES: ICategoryItem[] = [
-  { id: 0, label: "business" },
-  { id: 1, label: "sports" },
-  { id: 2, label: "entertainment" },
-  { id: 3, label: "general" },
-  { id: 4, label: "health" },
-  { id: 5, label: "science" },
-  { id: 6, label: "technology" }
-];
+function Categories(props: Props): JSX.Element {
+  const { onClick, categories, className } = props;
 
-const Categories: React.FC<Props> = ({ onClick }) => {
-  const handleClick = React.useCallback((category: ICategoryItem) => {
-    onClick(category.label);
-  }, [onClick]);
+  const handleClick = React.useCallback(
+    (category: ICategoryItem) => {
+      onClick(category.label);
+    },
+    [onClick],
+  );
 
   return (
-    <div className={styles.filters}>
+    <div className={cls(className, styles.filters)}>
       <div className={styles.tabs}>
-        {CATEGORIES.map(category => {
-          return <Category key={category.id} category={category} onClick={handleClick} />;
-        })}
+        {categories.map((category: ICategoryItem) => (
+          <Category key={category.id} category={category} onClick={handleClick} />
+        ))}
       </div>
     </div>
   );
-};
+}
 
 export default Categories;

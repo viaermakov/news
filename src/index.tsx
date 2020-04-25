@@ -1,11 +1,14 @@
-import * as React from "react";
-import * as ReactDOM from "react-dom";
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 
-// import { ChartPage } from './containers/ChartPage';
-import Routes from "./routes/root";
-import "./index.scss";
-import { rootStore, Provider } from "./store";
+import Routes from './routes/root';
+import { rootStore, Provider } from './store';
+import './index.scss';
 
-const App = () => <Provider value={rootStore}><Routes /></Provider>;
+const App = () => (
+  <Provider value={rootStore}>
+    <Routes />
+  </Provider>
+);
 
-ReactDOM.render(<App />, document.getElementById("root") as HTMLElement);
+ReactDOM.render(<App />, document.getElementById('root') as HTMLElement);

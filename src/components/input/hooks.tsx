@@ -33,7 +33,7 @@ function useTimeoutFn(fn: Function, ms = 0): UseTimeoutFnReturn {
     set();
 
     return clear;
-  }, [ms]);
+  }, [ms, clear, set]);
 
   return [isReady, clear, set];
 }

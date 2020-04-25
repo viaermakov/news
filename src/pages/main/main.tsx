@@ -29,8 +29,6 @@ const Main: React.FC = observer(() => {
     getArticles();
   }, []);
 
-  // console.log(articles.length);
-
   return (
     <div className={styles.layout}>
       <Filters />

@@ -117,7 +117,7 @@
         "ignoreEnums": true,
         "enforceConst": true,
         "ignoreReadonlyClassProperties": true,
-        "ignore": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 24, 60, 1000]
+        "ignore": [-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 24, 60, 1000]
       }
     ],
     "@typescript-eslint/brace-style": [2, "1tbs"],
@@ -156,8 +156,7 @@
         "extensions": [".tsx"]
       }
     ],
-    "react/jsx-no-bind": 2,
-    "react/jsx-no-useless-fragment": 2,
+    "react/jsx-no-useless-fragment": 0,
     "react/jsx-pascal-case": 2,
 
     "react-hooks/rules-of-hooks": 2,

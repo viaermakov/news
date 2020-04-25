@@ -1,14 +1,15 @@
-import * as React from "react";
-import cls from "classnames";
+import * as React from 'react';
+import cls from 'classnames';
 
-import styles from "./input.scss";
-import { SearchIcon } from "components/icons/search";
-import useDebounce from "./hooks";
+import styles from './input.scss';
+import { SearchIcon } from 'components/icons/search';
+import useDebounce from './hooks';
 
 export interface ICallbackObject {
   value: string;
 }
 
+const INPUT_DEBOUNCE = 300;
 interface IInputProps {
   value?: string;
   placeholder?: string;
@@ -19,14 +20,14 @@ interface IInputProps {
 }
 
 const Input: React.SFC<IInputProps> = ({
-  value = "",
+  value = '',
   placeholder,
   disabled,
   onChange,
   onEnter,
-  className
+  className,
 }) => {
-  const [localValue, setValue] = React.useState<string>("");
+  const [localValue, setValue] = React.useState<string>('');
   const isMounted = React.useRef(false);
 
   React.useEffect(() => {
@@ -41,12 +42,12 @@ const Input: React.SFC<IInputProps> = ({
       }
       onChange && onChange(localValue);
     },
-    300,
-    [localValue]
+    INPUT_DEBOUNCE,
+    [localValue],
   );
 
   const handleOnKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
       handleOnEnter(event);
     }
   };
@@ -55,15 +56,14 @@ const Input: React.SFC<IInputProps> = ({
     setValue(event.target.value);
   };
 
-  const handleOnEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    return onEnter && onEnter(event.currentTarget.value);
-  };
+  const handleOnEnter = (event: React.KeyboardEvent<HTMLInputElement>) =>
+    onEnter && onEnter(event.currentTarget.value);
 
   return (
     <div className={cls(className, styles.wrapper)}>
       <input
-        type="text"
         className={styles.input}
+        type="text"
         value={localValue}
         placeholder={placeholder}
         disabled={disabled}

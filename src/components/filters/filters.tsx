@@ -1,25 +1,17 @@
 import * as React from 'react';
 import qs from 'qs';
-import styles from './filters.scss';
+
 import { useHistory, useLocation } from 'react-router-dom';
-import { Input } from 'components/input';
-import { Tabs } from 'components/tabs';
 
 import { getQuery } from 'src/getQuery';
-import Categories from './blocks/categories/categories';
 import { useStore } from 'src/store';
-import { ICategory } from 'src/types';
 
-interface IOption {
-  id: number;
-  label: string;
-  value: string;
-}
+import { Input } from 'components/input';
+import { Tabs } from 'components/tabs';
+import { Categories } from './blocks/categories';
+import { IOption, ORDER_OPTIONS, CATEGORIES, PAGES } from './constants';
 
-const orderOptions: IOption[] = [
-  { id: 0, label: '↑', value: 'asc' },
-  { id: 1, label: '↓', value: 'desc' },
-];
+import styles from './filters.scss';
 
 const Filters: React.FC = () => {
   const history = useHistory();
@@ -46,7 +38,7 @@ const Filters: React.FC = () => {
   );
 
   const handleSetCategory = React.useCallback(
-    (value: ICategory) => {
+    (value: string) => {
       const newQuery = { ...query, category: value };
       const queryString = qs.stringify(newQuery);
       history.push({ search: decodeURIComponent(queryString) });
@@ -57,15 +49,16 @@ const Filters: React.FC = () => {
 
   return (
     <div className={styles.filters}>
+      <Categories className={styles.pages} onClick={handleSetCategory} categories={PAGES} />
       <Input className={styles.input} onChange={handleChange} value={query.search} />
       <div className={styles.tabs}>
         <Tabs<IOption>
           value={query.order}
           className={styles.arrows}
           onClick={handleOrder}
-          options={orderOptions}
+          options={ORDER_OPTIONS}
         />
-        <Categories onClick={handleSetCategory} />
+        <Categories onClick={handleSetCategory} categories={CATEGORIES} />
       </div>
     </div>
   );

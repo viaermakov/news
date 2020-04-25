@@ -1,7 +1,4 @@
-import * as React from "react";
-import cls from "classnames";
-
-import styles from "./error.scss";
+import * as React from 'react';
 
 export interface ICallbackObject {
   value: string;
@@ -12,11 +9,7 @@ interface IInputProps {
   className?: string;
 }
 
-const ErrorWrapper: React.SFC<IInputProps> = ({
-  className,
-  error,
-  children
-}) => {
+const ErrorWrapper: React.SFC<IInputProps> = ({ className, error, children }) => {
   if (error) {
     return <div>{error}</div>;
   }

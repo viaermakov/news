@@ -1,11 +1,6 @@
 import * as React from 'react';
 import styles from './category.scss';
-import { ICategory } from 'src/types';
-
-export interface ICategoryItem {
-  id: number;
-  label: ICategory;
-}
+import { ICategoryItem } from '../types';
 
 interface Props {
   category: ICategoryItem;

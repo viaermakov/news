@@ -131,7 +131,7 @@ export const ArticlesStore = types
           },
         });
 
-        self.articles.replace([...articles, ...body.articles]);
+        self.articles = cast([...articles, ...body.articles]);
       } catch (e) {
         self.error = e.message;
       }
