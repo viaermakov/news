@@ -29,15 +29,15 @@ const Main: React.FC = observer(() => {
     getArticles();
   }, []);
 
+  const {
+    status: { error, isLoading },
+  } = articlesStore;
+
   return (
     <div className={styles.layout}>
       <Filters />
-      <ErrorWrapper error={articlesStore.error}>
-        <Articles
-          articles={articles}
-          isLoading={articlesStore.isLoading}
-          onEndedList={getArticles}
-        />
+      <ErrorWrapper error={error}>
+        <Articles articles={articles} isLoading={isLoading} onEndedList={getArticles} />
       </ErrorWrapper>
     </div>
   );

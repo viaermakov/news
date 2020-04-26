@@ -1,18 +1,29 @@
+import { SourcesPage } from './sources';
 import { ArticlesStore } from 'src/store/headlines';
 import { types, Instance, onSnapshot } from 'mobx-state-tree';
 import { createContext, useContext } from 'react';
 
 const RootModel = types.model({
   articles: ArticlesStore,
+  sources: SourcesPage,
 });
 
 export const rootStore = RootModel.create({
   articles: {
     articles: [],
-    isLoading: false,
+    status: {
+      error: '',
+      isLoading: false,
+    },
     favouriteIds: [],
-    error: '',
     page: 0,
+  },
+  sources: {
+    sources: [],
+    status: {
+      error: '',
+      isLoading: false,
+    },
   },
 });
 

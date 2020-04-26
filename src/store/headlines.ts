@@ -3,7 +3,8 @@ import { createTransformer } from 'mobx-utils';
 import { types, flow, cast } from 'mobx-state-tree';
 
 import { IArticle } from 'src/types';
-import { IResponse, getApi, IParams } from 'src/services/api';
+import { IResponse, getApi } from 'src/services/api';
+import { StatusModel } from './types';
 
 interface IQuery {
   search: string;
@@ -16,6 +17,16 @@ interface IData {
   status: string;
   totalResults: number;
   articles: IArticle[];
+}
+
+type countryParamType = 'ru' | 'en';
+
+export interface IParams {
+  category?: ICategory;
+  country?: countryParamType;
+  q?: string;
+  pageSize?: number;
+  page?: number;
 }
 
 const MAX_PAGE = 5;
@@ -60,10 +71,9 @@ export const CategoryType = types.maybe(
 
 export const ArticlesStore = types
   .model({
+    status: StatusModel,
     articles: types.optional(types.array(ArticleModel), []),
     favouriteIds: types.array(types.number),
-    isLoading: types.boolean,
-    error: types.string,
     page: types.number,
   })
   .views(self => ({
@@ -116,13 +126,13 @@ export const ArticlesStore = types
       if (more) {
         self.page = self.page + 1;
       } else {
-        self.isLoading = true;
+        self.status.isLoading = true;
         self.page = 1;
         articles = cast([]);
       }
 
       try {
-        const { body }: IResponse<IData> = yield getApi({
+        const { body }: IResponse<IData> = yield getApi<IParams>({
           url: 'https://newsapi.org/v2/top-headlines',
           params: {
             country: 'ru',
@@ -133,9 +143,9 @@ export const ArticlesStore = types
 
         self.articles = cast([...articles, ...body.articles]);
       } catch (e) {
-        self.error = e.message;
+        self.status.error = e.message;
       }
-      self.isLoading = false;
+      self.status.isLoading = false;
     });
 
     return {

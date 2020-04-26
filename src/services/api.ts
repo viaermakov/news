@@ -1,20 +1,9 @@
 import { API_KEY } from 'src/constants';
-import { ICategory } from 'src/types';
 import * as superagent from 'superagent';
 
 export interface IResponse<T> {
   body: T;
   error: string;
-}
-
-type countryParamType = 'ru' | 'en';
-
-export interface IParams {
-  category?: ICategory;
-  country?: countryParamType;
-  q?: string;
-  pageSize?: number;
-  page?: number;
 }
 
 type IMethod = 'get' | 'post' | 'put';
@@ -24,12 +13,12 @@ const superagentWithHeader = (method: IMethod, url: string) =>
     'X-Api-Key': API_KEY,
   });
 
-interface IApi {
+interface IApi<T> {
   url: string;
-  params?: IParams;
+  params?: T;
 }
 
-export async function getApi({ url, params }: IApi) {
+export async function getApi<T extends object>({ url, params }: IApi<T>) {
   const response = await superagentWithHeader('get', url).query({ ...params });
   return response;
 }

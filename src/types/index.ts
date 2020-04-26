@@ -1,7 +1,9 @@
-import { ArticleModel } from 'src/store/headlines';
 import { Instance } from 'mobx-state-tree';
+import { ArticleModel } from 'src/store/headlines';
+import { SourceModel } from 'src/store/sources';
 
 export type IArticle = Instance<typeof ArticleModel>;
+export type ISource = Instance<typeof SourceModel>;
 
 export type ICategory =
   | 'business'
