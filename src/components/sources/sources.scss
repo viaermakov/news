@@ -1,4 +1,4 @@
-.layout {
+.standartSources {
   margin: 2rem 10%;
   display: flex;
   flex-wrap: wrap;
@@ -6,10 +6,4 @@
   @media screen and (max-width: 900px) {
     margin: 2rem 4%;
   }
-}
-
-.source {
-  display: flex;
-  width: 33.33%;
-  margin: 8px 0;
 }

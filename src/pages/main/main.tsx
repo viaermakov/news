@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
 import { getQuery } from 'src/getQuery';
-import { Filters } from 'components/filters';
+import { Filters } from 'src/containers/filters';
 
 import styles from './main.scss';
 

@@ -14,7 +14,7 @@ module.exports = merge(common, {
     port: 9090,
     historyApiFallback: true,
     hot: true,
-    hotOnly: true
+    hotOnly: true,
   },
 
   module: {
@@ -32,6 +32,7 @@ module.exports = merge(common, {
             options: {
               modules: true,
               sourceMap: true,
+              localIdentName: '[path]_[name]_[local]',
             },
           },
           {

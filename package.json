@@ -20,6 +20,7 @@
     "express-favicon": "^2.0.1",
     "framer-motion": "^1.8.4",
     "history": "^4.10.1",
+    "incstr": "^1.2.3",
     "intersection-observer": "^0.7.0",
     "mobx": "^5.15.4",
     "mobx-devtools-mst": "^0.9.21",

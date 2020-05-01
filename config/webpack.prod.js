@@ -10,6 +10,8 @@ const CompressionPlugin = require('compression-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const common = require('./webpack.common.js');
 
+const getMinifiedClassName = require('./helpers/getMinifiedClassName');
+
 module.exports = merge(common, {
   mode: 'production',
 
@@ -44,7 +46,6 @@ module.exports = merge(common, {
         },
       }),
     ],
-    runtimeChunk: false,
     splitChunks: {
       cacheGroups: {
         default: false,
@@ -68,6 +69,8 @@ module.exports = merge(common, {
             loader: 'css-loader',
             options: {
               modules: true,
+              getLocalIdent: (context, localIdentName, localName) =>
+                getMinifiedClassName(localName, context.resourcePath),
             },
           },
           {
