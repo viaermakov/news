@@ -1,0 +1,51 @@
+.wrapper {
+  position: sticky;
+  height: 100vh;
+  top: 0;
+  right: 0;
+  display: flex;
+  width: 300px;
+  background: #fff;
+  border-left: 1px solid #eee;
+  overflow: hidden;
+}
+
+.cc {
+  position: sticky;
+  margin-top: 16px;
+  right: 24px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.close {
+  position: absolute;
+  top: 8px;
+  right: 16px;
+  font-size: 32px;
+  cursor: pointer;
+}
+
+.enter,
+.appear {
+  width: 0;
+}
+
+.enterActive,
+.appearActive {
+  width: 300px;
+  transition: all 200ms ease-in-out;
+}
+
+.exit {
+  width: 300px;
+}
+
+.exitActive {
+  width: 0;
+  transition: all 200ms;
+}
+
+.hidden {
+  display: none;
+}

@@ -1,7 +1,10 @@
 .standartSources {
-  margin: 2rem 10%;
+  position: relative;
+  width: 100%;
+  padding: 2rem;
   display: flex;
   flex-wrap: wrap;
+  box-sizing: border-box;
 
   @media screen and (max-width: 900px) {
     margin: 2rem 4%;
