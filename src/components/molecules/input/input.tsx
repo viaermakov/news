@@ -2,7 +2,7 @@ import * as React from 'react';
 import cls from 'classnames';
 
 import styles from './input.scss';
-import { SearchIcon } from 'components/icons/search';
+import { SearchIcon } from 'src/components/icons/search';
 import useDebounce from './hooks';
 
 export interface ICallbackObject {

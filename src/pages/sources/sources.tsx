@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { observer } from 'mobx-react-lite';
 
-import { ErrorWrapper } from 'src/components/error';
+import { ErrorWrapper } from 'src/components/molecules/error';
 import { useStore } from 'src/store';
-import { Sources } from 'src/components/sources';
-import { Slider } from 'src/components/slider';
-import { SourceForm } from 'src/components/form';
+import { Sources } from 'src/components/organisms/sources';
+import { Slider } from 'src/components/molecules/slider';
+import { SourceForm } from 'src/components/organisms/form';
 
 const SourcesPage: React.FC = observer(() => {
   const { sources: sourcesStore } = useStore();

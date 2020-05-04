@@ -3,14 +3,14 @@ import { useLocation } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
 import { getQuery } from 'src/getQuery';
-import { Filters } from 'src/containers/filters';
+import { Filters } from 'src/components/organisms/filters';
 
 import styles from './main.scss';
 
 import { useStore } from 'src/store';
 
-import { Articles } from 'src/components/articles';
-import { ErrorWrapper } from 'src/components/error';
+import { Articles } from 'src/components/organisms/articles';
+import { ErrorWrapper } from 'src/components/molecules/error';
 
 const Main: React.FC = observer(() => {
   const location = useLocation();

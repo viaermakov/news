@@ -1,4 +1,4 @@
-import { IDataForm } from './../components/form/source-form';
+import { IDataForm } from '../components/organisms/form/source-form';
 import { StatusModel } from './types';
 import { getApi, IResponse } from 'src/services/api';
 import { types, flow, cast } from 'mobx-state-tree';

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import cls from 'classnames';
 
-import { Button } from 'components/button';
+import { Button } from 'src/components/molecules/button';
 
 import styles from './tabs.scss';
 
@@ -21,18 +21,16 @@ interface IOption {
 function Tabs<T extends IOption>({ className, options, onClick, value }: ITabsProps<T>) {
   return (
     <div className={cls(className, styles.tabs)}>
-      {options.map(option => {
-        return (
-          <Button<T>
-            key={option.id}
-            item={option}
-            onClick={onClick}
-            isActive={option.value === value}
-          >
-            {option.label}
-          </Button>
-        );
-      })}
+      {options.map(option => (
+        <Button<T>
+          key={option.id}
+          item={option}
+          onClick={onClick}
+          isActive={option.value === value}
+        >
+          {option.label}
+        </Button>
+      ))}
     </div>
   );
 }

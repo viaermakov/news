@@ -6,10 +6,14 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { getQuery } from 'src/getQuery';
 import { useStore } from 'src/store';
 
-import { IOption } from 'src/components/filters/constants';
-import { Filters } from 'src/components/filters';
+import { Input } from 'src/components/molecules/input';
+import { Tabs } from 'src/components/molecules/tabs';
+import { Categories } from './blocks/categories';
+import { IOption, ORDER_OPTIONS, CATEGORIES, PAGES } from './constants';
 
-const FiltersContainer: React.FC = () => {
+import styles from './filters.scss';
+
+const Filters: React.FC = () => {
   const history = useHistory();
   const location = useLocation();
   const query = getQuery(location);
@@ -44,12 +48,20 @@ const FiltersContainer: React.FC = () => {
   );
 
   return (
-    <Filters
-      onChangeCategory={handleSetCategory}
-      onChangeSearch={handleChange}
-      onOrder={handleOrder}
-    />
+    <div className={styles.filters}>
+      <Categories className={styles.pages} onClick={handleSetCategory} categories={PAGES} />
+      <Input className={styles.input} onChange={handleChange} value={query.search} />
+      <div className={styles.tabs}>
+        <Tabs<IOption>
+          value={query.order}
+          className={styles.arrows}
+          onClick={handleOrder}
+          options={ORDER_OPTIONS}
+        />
+        <Categories onClick={handleSetCategory} categories={CATEGORIES} />
+      </div>
+    </div>
   );
 };
 
-export default FiltersContainer;
+export default Filters;
