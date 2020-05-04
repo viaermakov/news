@@ -24,6 +24,14 @@ export const rootStore = RootModel.create({
       error: '',
       isLoading: false,
     },
+    form: {
+      fields: {
+        category: '',
+        language: '',
+        country: '',
+      },
+      step: 0,
+    },
   },
 });
 

@@ -5,6 +5,7 @@ import { ErrorWrapper } from 'src/components/error';
 import { useStore } from 'src/store';
 import { Sources } from 'src/components/sources';
 import { Slider } from 'src/components/slider';
+import { SourceForm } from 'src/components/form';
 
 const SourcesPage: React.FC = observer(() => {
   const { sources: sourcesStore } = useStore();
@@ -21,7 +22,9 @@ const SourcesPage: React.FC = observer(() => {
     <div style={{ display: 'flex' }}>
       <ErrorWrapper error={error}>
         <Sources sources={sourcesStore.sources} isLoading={isLoading} />
-        <Slider />
+        <Slider>
+          <SourceForm />
+        </Slider>
       </ErrorWrapper>
     </div>
   );
