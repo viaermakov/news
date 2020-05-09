@@ -6,6 +6,7 @@ import { observer } from 'mobx-react-lite';
 import cls from 'classnames';
 
 import styles from './sources.scss';
+import { SwitchTransition, CSSTransition } from 'react-transition-group';
 
 interface ISourcesComponentProps {
   sources: ISource[];
@@ -15,6 +16,8 @@ interface ISourcesComponentProps {
 }
 
 const Sources: React.FC<ISourcesComponentProps> = observer(({ sources, isLoading }) => {
+  const [page, setPage] = React.useState<number>(0);
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -27,8 +30,27 @@ const Sources: React.FC<ISourcesComponentProps> = observer(({ sources, isLoading
     <Source key={source.id} source={source} isFavourite={false} />
   );
 
+  const renderPage = () => (
+    <div className={styles.standartSources}>
+      {sources.slice(page * 10, (page + 1) * 10).map(source => renderView(source))}
+    </div>
+  );
+
   return (
-    <div className={cls(styles.standartSources)}>{sources.map(source => renderView(source))}</div>
+    <div className={styles.container}>
+      <div className={styles.content}>
+        <SwitchTransition mode="out-in">
+          <CSSTransition key={page} classNames={{ ...styles }} timeout={300}>
+            <div className={styles.block}>{renderPage()}</div>
+          </CSSTransition>
+        </SwitchTransition>
+      </div>
+      <div>
+        <button onClick={() => setPage(page - 1)}>{'<-'}</button>
+        {page}
+        <button onClick={() => setPage(page + 1)}>{'->'}</button>
+      </div>
+    </div>
   );
 });
 

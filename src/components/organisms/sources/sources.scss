@@ -18,3 +18,39 @@ fieldset {
   margin: 8px 0;
   padding: 0;
 }
+.container {
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+.content {
+  min-height: 800px;
+
+}
+
+.block {
+  transition: all 300ms;
+}
+
+.enter {
+  transform: translateX(-100%);
+}
+
+.enterActive {
+  transform: translateX(0%);
+}
+
+.exit {
+  transform: translateX(0%);
+  opacity: 1;
+}
+
+.exitActive {
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+.enterActive .exitActive {
+  transition: all 300ms;
+}

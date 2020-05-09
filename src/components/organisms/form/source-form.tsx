@@ -80,6 +80,7 @@ const SourceFrom: React.FC = observer(() => {
       </CSSTransition>
     </SwitchTransition>
   );
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       {renderStepFields()}
