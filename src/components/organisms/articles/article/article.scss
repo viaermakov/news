@@ -1,11 +1,12 @@
 .row {
   position: relative;
-
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 1fr;
   grid-template-rows: repeat(1, minmax(50px, 1fr));
+  gap: 1rem 0;
   border-bottom: 1px solid #eee;
   padding: 2rem 0;
+
   &:last-child {
     border-bottom: none;
   }
@@ -15,41 +16,55 @@
   }
 }
 
-.cell {
-  box-sizing: border-box;
-  align-self: center;
-  margin: 0.5rem 0;
-  @media screen and (max-width: 900px) {
-    justify-self: flex-start;
-  }
+.info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+
+  padding: 0 12px;
+  border-left: 3px solid #000;
+}
+
+.source {
+  margin-top: 0.3rem;
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+.title {
+  margin-bottom: 0.5rem;
+  max-width: 800px;
+  font-size: 3rem;
+  line-height: 4rem;
 }
 
 .text {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  max-width: 800px;
+  text-align: left;
+  font-size: 1.2rem;
+  line-height: 2rem;
+  color: #212121;
+}
+
+.link {
+  position: relative;
+  font-size: 1.2rem;
+  font-weight: bold;
   color: black;
 
-  @media screen and (max-width: 400px) {
-    padding-right: 4rem;
-  }
-}
-
-.name {
-  margin-bottom: 0.5rem;
-}
-
-.phrase {
-  font-size: 0.8rem;
-  color: #796767;
-  text-align: left;
-}
-
-.heart {
-  @media screen and (max-width: 900px) {
+  &::after {
+    content: '';
     position: absolute;
-    top: 24px;
-    right: 12px;
-    justify-self: flex-start;
+    height: 3px;
+    width: 4%;
+    bottom: -6px;
+    left: 0;
+    background: #000;
   }
+}
+
+.img {
+  max-width: 600px;
+  margin-top: 2rem;
+  //filter: grayscale(1);
 }

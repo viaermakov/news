@@ -5,11 +5,17 @@ import cls from 'classnames';
 import { CSSTransition } from 'react-transition-group';
 import styles from './slider.scss';
 
-// interface IArticlesComponentProps {}
+interface ISliderComponentProps {
+  isOpen?: boolean;
+}
 
-const Slider: React.FC = observer(({ children }) => {
-  const [isVisible, setIsVisible] = React.useState<boolean>(true);
+const Slider: React.FC<ISliderComponentProps> = ({ children, isOpen = false }) => {
+  const [isVisible, setIsVisible] = React.useState<boolean>(isOpen);
   const [showButton, setShowButton] = React.useState<boolean>(false);
+
+  React.useEffect(() => {
+    setIsVisible(isOpen);
+  }, [isOpen]);
 
   const handleShow = () => {
     setIsVisible(state => !state);
@@ -22,7 +28,7 @@ const Slider: React.FC = observer(({ children }) => {
   );
 
   return (
-    <>
+    <div className={styles.back}>
       <CSSTransition
         in={isVisible}
         timeout={200}
@@ -41,8 +47,8 @@ const Slider: React.FC = observer(({ children }) => {
         </section>
       </CSSTransition>
       {renderShowButton()}
-    </>
+    </div>
   );
-});
+};
 
-export default Slider;
+export default observer(Slider);

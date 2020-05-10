@@ -11,18 +11,20 @@ const RootModel = types.model({
 export const rootStore = RootModel.create({
   articles: {
     articles: [],
-    status: {
+    status: 'initial',
+    error: '',
+    source: {
       error: '',
-      isLoading: false,
+      status: 'initial',
+      articles: [],
     },
-    favouriteIds: [],
     page: 0,
   },
   sources: {
     sources: [],
     status: {
       error: '',
-      isLoading: false,
+      state: 'initial',
     },
     form: {
       fields: {

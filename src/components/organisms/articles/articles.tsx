@@ -12,44 +12,52 @@ interface IArticlesComponentProps {
   articles: IArticle[];
   favouritesIds?: number[];
   isLoading: boolean;
-  onAddFavourite?: (id: number) => void;
-  onEndedList: (v: boolean) => void;
+  onClickSource: (id: string) => void;
+  onEndedList?: (v: boolean) => void;
 }
 
-const Articles: React.FC<IArticlesComponentProps> = observer(
-  ({ articles, onEndedList, isLoading }) => {
-    const wrapperRef = React.useRef<HTMLDivElement>(null);
+const Articles: React.FC<IArticlesComponentProps> = ({
+  articles,
+  onEndedList,
+  isLoading,
+  onClickSource,
+}) => {
+  const wrapperRef = React.useRef<HTMLDivElement>(null);
 
-    const handleIntersect = () => {
-      onEndedList(true);
-    };
+  const handleIntersect = () => {
+    onEndedList && onEndedList(true);
+  };
 
-    useIntersectionObserver(wrapperRef, {
-      rootMargin: '30%',
-      onIntersect: handleIntersect,
-    });
+  useIntersectionObserver(wrapperRef, {
+    rootMargin: '30%',
+    onIntersect: handleIntersect,
+  });
 
-    if (isLoading) {
-      return <div>Loading...</div>;
-    }
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
-    if (!articles || articles.length === 0) {
-      return <div>No results. Try to use other filters...</div>;
-    }
+  if (!articles || articles.length === 0) {
+    return <div>No results. Try to use other filters...</div>;
+  }
 
-    const renderView = (article: IArticle): React.ReactElement | null => (
-      <Row key={article.publishedAt} article={article} isFavourite={false} />
-    );
+  const renderView = (article: IArticle): React.ReactElement | null => (
+    <Row
+      key={article.publishedAt}
+      article={article}
+      isFavourite={false}
+      onClickSource={onClickSource}
+    />
+  );
 
-    return (
-      <>
-        <div className={cls(styles.standartArticles)} ref={wrapperRef}>
-          {articles.map(article => renderView(article))}
-        </div>
-        <div ref={wrapperRef}></div>
-      </>
-    );
-  },
-);
+  return (
+    <>
+      <div className={cls(styles.standartArticles)} ref={wrapperRef}>
+        {articles.map(article => renderView(article))}
+      </div>
+      <div ref={wrapperRef}></div>
+    </>
+  );
+};
 
-export default Articles;
+export default observer(Articles);

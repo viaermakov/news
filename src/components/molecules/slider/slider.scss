@@ -1,5 +1,5 @@
 .wrapper {
-  position: sticky;
+  position: fixed;
   top: 0;
   right: 0;
   display: flex;
@@ -8,11 +8,12 @@
   padding: 48px;
   background: #fff;
   border-left: 1px solid #eee;
-  overflow: hidden;
+  overflow-y: scroll;
 }
 
 .cc {
-  position: sticky;
+  position: fixed;
+  top: 0;
   margin-top: 16px;
   right: 24px;
   font-size: 24px;
@@ -49,4 +50,10 @@
 
 .hidden {
   display: none;
+}
+
+.back {
+  position: absolute;
+  height: 100%;
+  width: 100%;;
 }

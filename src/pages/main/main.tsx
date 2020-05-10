@@ -11,8 +11,9 @@ import { useStore } from 'src/store';
 
 import { Articles } from 'src/components/organisms/articles';
 import { ErrorWrapper } from 'src/components/molecules/error';
+import { Slider } from 'src/components/molecules/slider';
 
-const Main: React.FC = observer(() => {
+const Main: React.FC = () => {
   const location = useLocation();
   const query = getQuery(location);
   const { articles: articlesStore } = useStore();
@@ -29,18 +30,32 @@ const Main: React.FC = observer(() => {
     getArticles();
   }, []);
 
-  const {
-    status: { error, isLoading },
-  } = articlesStore;
+  const handleClickSource = (id: string) => {
+    articlesStore.getSourceArticles(id);
+  };
+
+  const { statuses } = articlesStore;
 
   return (
     <div className={styles.layout}>
       <Filters />
-      <ErrorWrapper error={error}>
-        <Articles articles={articles} isLoading={isLoading} onEndedList={getArticles} />
+      <ErrorWrapper error={statuses.articles.error}>
+        <Articles
+          articles={articles}
+          isLoading={statuses.articles.isLoading}
+          onEndedList={getArticles}
+          onClickSource={handleClickSource}
+        />
+        <Slider isOpen={statuses.source.isLoaded}>
+          <Articles
+            articles={articlesStore.source.articles}
+            isLoading={false}
+            onClickSource={handleClickSource}
+          />
+        </Slider>
       </ErrorWrapper>
     </div>
   );
-});
+};
 
-export default Main;
+export default observer(Main);

@@ -8,22 +8,34 @@ import styles from './article.scss';
 interface ITableComponentProps {
   article: IArticle;
   isFavourite: boolean;
-  onAddFavourite?: (id: number) => void;
+  onClickSource: (v: string) => void;
 }
 
-const Row: React.FC<ITableComponentProps> = ({ article }) => (
-  <div key={article.url}>
-    <div className={styles.row}>
-      <a className={styles.text} href={article.url}>
-        <div className={styles.name}>{article.title}</div>
-        <div className={styles.phrase}>{article.description}</div>
+const Row: React.FC<ITableComponentProps> = ({ article, onClickSource }) => {
+  const date = new Date(article.publishedAt).toDateString();
+
+  const handleClickRow = () => {
+    article.source.id && onClickSource(article.source.id);
+  };
+
+  return (
+    <div key={article.url} className={styles.row}>
+      <div className={styles.info}>
+        <p>{date}</p>
+        <p onClick={handleClickRow} className={styles.source}>
+          {article.source.name}
+        </p>
+      </div>
+      <div className={styles.title}>{article.title}</div>
+      <div className={styles.text}>{article.description}</div>
+      <a className={styles.link} href={article.url}>
+        Read more
       </a>
       {article.urlToImage && (
-        <img src={article.urlToImage} alt={article.title} height="300px" loading="lazy" />
+        <img src={article.urlToImage} className={styles.img} alt={article.title} loading="lazy" />
       )}
-      <div className={styles.cell}>{article.author}</div>
     </div>
-  </div>
-);
+  );
+};
 
 export default Row;

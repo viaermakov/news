@@ -4,7 +4,7 @@ import { types, flow, cast } from 'mobx-state-tree';
 
 import { IArticle } from 'src/types';
 import { IResponse, getApi } from 'src/services/api';
-import { StatusModel } from './types';
+import { DATA_STATE } from './types';
 
 interface IQuery {
   search: string;
@@ -19,12 +19,13 @@ interface IData {
   articles: IArticle[];
 }
 
-type countryParamType = 'ru' | 'en';
+type countryParamType = 'ru' | 'us';
 
 export interface IParams {
   category?: ICategory;
   country?: countryParamType;
   q?: string;
+  sources?: string;
   pageSize?: number;
   page?: number;
 }
@@ -69,14 +70,36 @@ export const CategoryType = types.maybe(
   ),
 );
 
+export const SourceModel = types.model({
+  articles: types.optional(types.array(ArticleModel), []),
+  status: types.enumeration('State', ['initial', 'loading', 'loaded', 'failed']),
+  error: types.string,
+});
+
 export const ArticlesStore = types
   .model({
-    status: StatusModel,
+    status: types.enumeration('State', ['initial', 'loading', 'loaded', 'failed']),
+    error: types.string,
     articles: types.optional(types.array(ArticleModel), []),
-    favouriteIds: types.array(types.number),
+    source: SourceModel,
     page: types.number,
   })
   .views(self => ({
+    get statuses() {
+      return {
+        articles: {
+          isLoading: self.status === DATA_STATE.loading,
+          isLoaded: self.status === DATA_STATE.loaded,
+          error: self.error,
+        },
+        source: {
+          isLoading: self.source.status === DATA_STATE.loading,
+          isLoaded: self.source.status === DATA_STATE.loaded,
+          error: self.source.error,
+        },
+      };
+    },
+
     get getSortedArticles() {
       return createTransformer((query: IQuery) => {
         const isReverse = query.order === 'desc';
@@ -126,7 +149,7 @@ export const ArticlesStore = types
       if (more) {
         self.page = self.page + 1;
       } else {
-        self.status.isLoading = true;
+        self.status = DATA_STATE.loading;
         self.page = 1;
         articles = cast([]);
       }
@@ -143,14 +166,34 @@ export const ArticlesStore = types
 
         self.articles = cast([...articles, ...body.articles]);
       } catch (e) {
-        self.status.error = e.message;
+        self.status = e.message;
       }
-      self.status.isLoading = false;
+      self.status = DATA_STATE.loaded;
+    });
+
+    const getSourceArticles = flow(function*(sourceId) {
+      self.source.status = DATA_STATE.loading;
+
+      try {
+        const { body }: IResponse<IData> = yield getApi<IParams>({
+          url: 'https://newsapi.org/v2/top-headlines',
+          params: {
+            sources: sourceId,
+          },
+        });
+
+        self.source.articles = cast(body.articles);
+      } catch (e) {
+        self.source.status = DATA_STATE.failed;
+        self.source.error = e.message;
+      }
+      self.source.status = DATA_STATE.loaded;
     });
 
     return {
       setCategory,
       getArticles,
+      getSourceArticles,
       searchArticles,
     };
   });

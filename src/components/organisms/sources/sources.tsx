@@ -3,7 +3,6 @@ import * as React from 'react';
 import { Source } from './source';
 import { ISource } from 'src/types';
 import { observer } from 'mobx-react-lite';
-import cls from 'classnames';
 
 import styles from './sources.scss';
 import { SwitchTransition, CSSTransition } from 'react-transition-group';

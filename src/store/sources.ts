@@ -1,5 +1,5 @@
 import { IDataForm } from '../components/organisms/form/source-form';
-import { StatusModel } from './types';
+import { StatusModel, DATA_STATE } from './types';
 import { getApi, IResponse } from 'src/services/api';
 import { types, flow, cast } from 'mobx-state-tree';
 import { ISource } from 'src/types';
@@ -34,8 +34,19 @@ export const SourcesPage = types
     status: StatusModel,
     form: FormModel,
   })
+  .views(self => ({
+    get statuses() {
+      return {
+        isLoading: self.status.state === DATA_STATE.loading,
+        isLoaded: self.status.state === DATA_STATE.loaded,
+        error: self.status.error,
+      };
+    },
+  }))
   .actions(self => {
     const getSources = flow(function*() {
+      self.status.state = DATA_STATE.loading;
+
       try {
         const { body }: IResponse<IData> = yield getApi({
           url: 'https://newsapi.org/v2/sources',
@@ -45,7 +56,9 @@ export const SourcesPage = types
         });
 
         self.sources = cast(body.sources);
+        self.status.state = DATA_STATE.loaded;
       } catch (e) {
+        self.status.state = DATA_STATE.failed;
         self.status.error = e.message;
       }
     });

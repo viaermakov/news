@@ -15,7 +15,7 @@ const SourcesPage: React.FC = observer(() => {
   }, []);
 
   const {
-    status: { error, isLoading },
+    statuses: { error, isLoading },
   } = sourcesStore;
 
   return (
