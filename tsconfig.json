@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "sourceMap": true,
-    "target": "esnext",
-    "module": "esnext",
+    "target": "ES2019",
+    "module": "ESNext",
     "jsx": "react",
     "moduleResolution": "node",
     "experimentalDecorators": true,
@@ -10,13 +10,13 @@
     "removeComments": true,
     "noImplicitReturns": true,
     "allowSyntheticDefaultImports": true,
+
     "noUnusedLocals": true,
     "strict": true,
     "outDir": "build",
     "baseUrl": "src",
     "paths": {
-      "src/*": ["./*"],
-      
+      "src/*": ["./*"]
     }
   },
   "exclude": ["build", "node_modules"]
